@@ -19,7 +19,8 @@ db = MongoClient(MONGO_URL)['pagamentos'] #nome do banco de dados
 
 @app.route('/pagamento/', methods=['POST'])
 def create_pagamento():
-    usuario_id = request.headers.get('usuario_id')
+    data = request.json
+    usuario_id = data.get('usuario_id')
     
     if not usuario_id:
         return jsonify({"erro": "ID do usuário é obrigatório"}), 400
@@ -37,7 +38,6 @@ def create_pagamento():
     except requests.exceptions.RequestException:
         return jsonify({"erro": "Serviço de validação indisponível"}), 503
 
-    data = request.json
 
     valor_pagamento = float(data.get("valor_pagamento", 0))
     num_parcelas = int(data.get("parcelas"), 1)
