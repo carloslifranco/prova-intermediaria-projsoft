@@ -1,0 +1,45 @@
+name: Deploy automatico
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: "carloslifranco"
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: carloslifranco/posts:${{ github.sha }}
+
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_TEST }}
+        username: "ubuntu"
+        key: ${{ secrets.KEY_TEST }}
+        port: 22
+        script: |
+          docker stop posts
+          docker rm --force posts
+          docker run  -d -p 80:5000 -e MONGO_URL=${{ secrets.MONGO_URL }} -e USERS_API_URL="${{ secrets.USERS_API_URL }}" --network=rede --name posts carloslifranco/posts:${{ github.sha }}
