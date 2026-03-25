@@ -40,7 +40,7 @@ def create_pagamento():
 
 
     valor_pagamento = float(data.get("valor_pagamento", 0))
-    num_parcelas = int(data.get("parcelas"), 1)
+    num_parcelas = int(data.get("parcelas", 1))
     valor_parcela = valor_pagamento / num_parcelas if num_parcelas > 0 else valor_pagamento
 
 
