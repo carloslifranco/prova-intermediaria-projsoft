@@ -41,10 +41,9 @@ def create_pagamento():
 
     valor_pagamento = float(data.get("valor_pagamento", 0))
     num_parcelas = int(data.get("parcelas"), 1)
-    valor_parcela = valor_pagamento / valor_parcela if num_parcelas > 0 else valor_pagamento
+    valor_parcela = valor_pagamento / num_parcelas if num_parcelas > 0 else valor_pagamento
 
 
-    # Criando a instância do Model (a data é gerada automaticamente no __init__)
     novo_pagamento = Pagamento (
         usuario_id=usuario_id,
         usuario_email=usuario_email, 
@@ -55,8 +54,8 @@ def create_pagamento():
         valor_parcela=valor_parcela
     )
 
-    # Salvando no Mongo
-    resultado = db.pagamentos.insert_one(novo_pagamento)
+    #Salvando no Mongo
+    resultado = db.pagamentos.insert_one(novo_pagamento.to_dict())
     
     return jsonify({"mensagem": "Pagamento criado!", "id": str(resultado.inserted_id)}), 201
 
