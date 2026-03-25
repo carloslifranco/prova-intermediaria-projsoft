@@ -42,4 +42,4 @@ jobs:
         script: |
           docker stop pagamentos
           docker rm --force pagamentos
-          docker run  -d -p 80:5001 -e MONGO_URL=${{ secrets.MONGO_URL }} -e USERS_API_URL="${{ secrets.USERS_API_URL }}" --network=rede --name pagamentos carloslifranco/pagamentos:${{ github.sha }}
+          docker run  -d -p 80:5000 -e MONGO_URL=${{ secrets.MONGO_URL }} -e USERS_API_URL="${{ secrets.USERS_API_URL }}" --network=rede --name pagamentos carloslifranco/pagamentos:${{ github.sha }}
