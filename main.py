@@ -51,7 +51,8 @@ def create_pagamento():
         valor_pagamento=valor_pagamento,
         tipo_pagamento=data.get('tipo_pagamento'),
         parcelas=num_parcelas,
-        valor_parcela=valor_parcela
+        valor_parcela=valor_parcela,
+        data_pagamento=data.get('data_pagamento')
     )
 
     #Salvando no Mongo

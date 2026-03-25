@@ -2,7 +2,7 @@ from datetime import datetime
 from bson import ObjectId
 
 class Pagamento:
-    def __init__(self, codigo, valor_pagamento, tipo_pagamento, parcelas, valor_parcela, data_pagamento, usuario_email, usuario_id, _id=None):
+    def __init__(self, codigo, valor_pagamento, tipo_pagamento, parcelas, valor_parcela, usuario_email, usuario_id, _id=None, data_pagamento=None):
         self._id = _id
         self.usuario_id = usuario_id
         self.usuario_email = usuario_email
