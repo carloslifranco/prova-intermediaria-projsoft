@@ -17,7 +17,7 @@ USERS_API_URL = f"http://{users_host}/users/"
 db = MongoClient(MONGO_URL)['pagamentos'] #nome do banco de dados
 
 
-@app.route('/pagamento/', methods=['POST'])
+@app.route('/pagamento', methods=['POST'])
 def create_pagamento():
     data = request.json
     usuario_id = data.get('usuario_id')
@@ -88,4 +88,4 @@ def delete_pagamento(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=5000)
