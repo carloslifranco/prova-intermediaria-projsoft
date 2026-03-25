@@ -12,7 +12,7 @@ mongo_host = os.getenv("MONGO_URL", "localhost")
 users_host = os.getenv("USERS_API_URL", "localhost")
 
 MONGO_URL = f"mongodb://{mongo_host}:27017"
-USERS_API_URL = f"http://{users_host}/users"
+USERS_API_URL = f"http://{users_host}/users/"
 
 db = MongoClient(MONGO_URL)['pagamentos'] #nome do banco de dados
 
@@ -40,7 +40,7 @@ def create_pagamento():
     data = request.json
 
     valor_pagamento = float(data.get("valor_pagamento", 0))
-    num_parcelas = int(data.get("parcelas"))
+    num_parcelas = int(data.get("parcelas"), 1)
     valor_parcela = valor_pagamento / valor_parcela if num_parcelas > 0 else valor_pagamento
 
 
