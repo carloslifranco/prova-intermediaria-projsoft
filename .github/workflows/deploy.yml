@@ -30,7 +30,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: carloslifranco/posts:${{ github.sha }}
+        tags: carloslifranco/pagamentos:${{ github.sha }}
 
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
@@ -40,6 +40,6 @@ jobs:
         key: ${{ secrets.KEY_TEST }}
         port: 22
         script: |
-          docker stop posts
+          docker stop pagamentos
           docker rm --force posts
-          docker run  -d -p 80:5000 -e MONGO_URL=${{ secrets.MONGO_URL }} -e USERS_API_URL="${{ secrets.USERS_API_URL }}" --network=rede --name posts carloslifranco/posts:${{ github.sha }}
+          docker run  -d -p 80:5000 -e MONGO_URL=${{ secrets.MONGO_URL }} -e USERS_API_URL="${{ secrets.USERS_API_URL }}" --network=rede --name pagamentos carloslifranco/pagamentos:${{ github.sha }}

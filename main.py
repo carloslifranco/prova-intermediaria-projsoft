@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from models import Pagamento # Importando sua classe
+from models import Pagamento 
 from pymongo import MongoClient
 from bson import ObjectId
 import requests
